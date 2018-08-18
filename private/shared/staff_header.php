@@ -32,8 +32,8 @@
                             <ul class="nav navbar-nav">
                                 <?php // if ($session->is_logged_in()){ ?>
                                     <li><a href="<?php echo root_path('/staff/index.php'); ?>">Главная</a></li> 
-                                    <li><a href="/staff/articles/index.php">Статьи</a></li>
-                                    <li ><a href="/staff/users/index.php">Пользователи</a></li>
+                                    <li><a href="<?php echo root_path('/staff/articles/index.php'); ?>">Статьи</a></li>
+                                    <li ><a href=<?php echo root_path('/staff/users/index.php'); ?>>Пользователи</a></li>
                                     <li ><a href="../logout.php">Выйти</a></li>
                                 <?php // } ?>
                                 </ul>

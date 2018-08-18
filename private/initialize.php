@@ -15,6 +15,7 @@
     require_once('database_functions.php');
     require_once('Parsedown.php');
     require_once('singletone.db.php');
+    require_once('validation_functions.php');
 
     // CLASSES
     require_once('class/article.class.php');

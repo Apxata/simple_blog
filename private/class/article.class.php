@@ -22,20 +22,17 @@
         (isset($args['visible'])) ? $this->visible = $args['visible'] : $this->visible = ''; 
     }
 
-    public function find_all_articles(){
-        global $database;
-
-        $sql = "SELECT * FROM articles ORDER BY create_date DESC";
-        $result = $this->fetch_all($sql);
-        return $result;
+    static public function find_all_articles($connection){
+        $articles = $connection->query("SELECT * FROM articles ORDER BY create_date DESC ")->fetchAll();
+        return $articles;
     }
 
-    public function find_all_visible_articles(){
-        global $database;
-
-        $sql = "SELECT * FROM articles WHERE visible = 1 ORDER BY create_date DESC";
-        $result = $this->fetch_all($sql);
-        return $result;
+    static public function find_article_by_id($connection, $id){
+        $sth = $connection->prepare(
+            "SELECT * FROM articles WHERE id = :id ORDER BY create_date DESC ");
+            $sth->execute(['id' => $id]);
+         $article = $sth->fetchAll();
+         return array_shift($article);
     }
 
     public function find_all_articles_per_page($per_page, $offset){
@@ -59,18 +56,72 @@
         $sql .= " OFFSET {$offset} ";
         $result = fetch_all($sql);
         return $result;
-     }
+    }
 
+    public function create($connect)  { 
+    
+    // Валидация на ввод верных данных
+    $this->validate();
+    if(!empty($this->errors)) {return false;}
 
-    public function fetch_all($sql) {
-        global $database;
+    $sth = $connect->prepare(
+        "INSERT INTO articles (
+            author_id,
+            preview_text,
+            full_text,
+            subject,
+            visible
+        ) values (
+            :author_id,
+            :preview_text,
+            :full_text,
+            :subject,
+            :visible
+        )"
+    );
 
-        $res = $database->query($sql);
-        While ($row = $res->fetch_object()) {
-            $rows[] = $row;
-        }
-        $res->free();
-        return $rows;
+    $sth->execute([
+        'author_id' => $this->author_id,
+        'preview_text' => $this->preview_text,
+        'full_text' => $this->full_text,
+        'subject' => $this->subject,
+        'visible' => $this->visible
+    ]);
+
+    if($this->confrim_db_operation($sth) == true){
+        return $_SESSION['message'] = "Операция прошла успешно";
+    }else {
+        return $sth->errorInfo();
+    }
+    
+    }
+
+    public function update($connect, $id){
+
+        $this->validate();
+        if(!empty($this->errors)) {return false;}
+
+        $sth = $connect->prepare(
+            "UPDATE articles SET preview_text = :preview_text, full_text = :full_text, subject = :subject, visible = :visible WHERE id = :id LIMIT 1 "
+        );
+
+        return $sth->execute([
+            'id' => $id,
+            'preview_text' => $this->preview_text,
+            'full_text' => $this->full_text,
+            'subject' => $this->subject,
+            'visible' => $this->visible
+        ]);
+
+        
+    }
+
+    public function confrim_db_operation($sth) {
+        if(($sth->errorInfo()[0] == 0 )){
+            return true;
+          } else {
+             return  $sth->errorInfo();
+          }
     }
 
     protected function validate() {
@@ -85,28 +136,7 @@
         return $this->errors;
     }
 
-    public function create() {
-        global $database;
-
-        $this->validate();
-        if(!empty($this->errors)) {return false;}
-
-        $sql ="INSERT INTO articles (";
-        $sql .= "author_id, preview_text, full_text, subject, visible ";
-        $sql .= ")  VALUES (";
-        $sql .= "'" . $this->author_id . "', ";
-        $sql .= "'" . $this->preview_text . "', ";
-        $sql .= "'" . $this->full_text . "', ";
-        $sql .= "'" . $this->subject . "', ";
-        $sql .= "'" . $this->visible . "'";
-        $sql .= ")";
-
-        $result = $database->query($sql);
-        if($result) {
-            $this->id = $database->insert_id;
-        }
-        return $result;
-    }
+    
 
 
 }

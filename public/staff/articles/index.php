@@ -3,24 +3,24 @@
 $page_title = 'Статьи'; 
 
 // Connect to db
-$conn = DB::get_connect(); 
+$connection = DB::get_connect(); 
+
 // Делаем запрос и получаем все статьи
-$articles = $conn->query(
-    "SELECT * FROM articles ORDER BY create_date DESC ")->fetchAll();
+$articles = Article::find_all_articles($connection);
 
-include(SHARED_PATH . '/staff_header.php'); 
-
+// Обрабатываем текст, чтобы показывал разметку маркдаун
 $Parsedown = new Parsedown();
-
 foreach ($articles as &$a) {
-   
     $a['full_text'] =  nl2br($Parsedown->text($a['full_text']));
-
 }
 
+// Формирование страницы для отображения
+
+include(SHARED_PATH . '/staff_header.php'); 
+//Подключаем шаблонизатор СМАРТИ
 $smarty = new Smarty;
 $smarty->assign('articles', $articles);
-$smarty->display(PUBLIC_PATH . ('/tpls/staff/article.tpl'));
+$smarty->display(PUBLIC_PATH . ('/tpls/staff/articles/index.tpl'));
 
 include(SHARED_PATH . '/staff_footer.php'); 
        

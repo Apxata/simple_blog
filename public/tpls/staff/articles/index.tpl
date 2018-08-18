@@ -15,7 +15,7 @@
                     </div>   <!-- a-content -->
                     <div class="a-footer">
                     <div class="comments"> 0 комментариев </div>
-                    <div class="editing col-sm-offset-6"><a href="edit.php?id=">Редактировать</a></div>
+                    <div class="editing col-sm-offset-6"><a href="edit.php?id={$article['id']}">Редактировать</a></div>
                     <div class="visible"> Статья показывается:</div>
                      </div> <!-- a-footer -->
                
