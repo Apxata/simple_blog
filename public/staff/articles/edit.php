@@ -19,7 +19,6 @@ if($article == false) {
 
 if(is_post_request()) {
 
-  $connection = DB::get_connect();
   // Save record using post parameters
   $args = $_POST['article'];
   $article = new Article($args);  
@@ -32,20 +31,10 @@ if(is_post_request()) {
     // show errors 
     $_SESSION['message'] = 'Что то пошло не так';
     redirect_to('edit.php?id=' . h(u($id))); 
-  }
-
+    }
 } else {
-
-  
   // display the form
-
 }
-
-// Обрабатываем текст, чтобы показывал разметку маркдаун
-// $Parsedown = new Parsedown();
-// foreach ($article as &$a) {
-//     $a['full_text'] =  nl2br($Parsedown->text($a['full_text']));
-// }
 
 // Формируем html
 
