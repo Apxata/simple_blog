@@ -9,9 +9,8 @@ $page_title = 'Редактирование статьи';
 if(!isset($_GET['id'])) {
   redirect_to('index.php');
 }
-$id = $_GET['id'];
-$connection = DB::get_connect();
-$article = Article::find_article_by_id($connection, $id); 
+$id = (int) $_GET['id'];
+$article = Article::find_article_by_id($id); 
 
 if($article == false) {
   redirect_to('index.php');
@@ -22,7 +21,7 @@ if(is_post_request()) {
   // Save record using post parameters
   $args = $_POST['article'];
   $article = new Article($args);  
-  $result = $article->update($connection, $id);
+  $result = $article->update($id);
   
   if($result === true) {
     $_SESSION['message'] = 'Статья успешно отредактирована';
@@ -30,7 +29,7 @@ if(is_post_request()) {
   } else {
     // show errors 
     $_SESSION['message'] = 'Что то пошло не так';
-    redirect_to('edit.php?id=' . h(u($id))); 
+    redirect_to('edit.php?id=' . $id); 
     }
 } else {
   // display the form

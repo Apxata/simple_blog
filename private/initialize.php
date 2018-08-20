@@ -12,17 +12,18 @@
     //function
     require_once('functions.php');
     require_once('db_cfg.php');
-    require_once('database_functions.php');
     require_once('Parsedown.php');
     require_once('singletone.db.php');
     require_once('validation_functions.php');
+    
 
     // CLASSES
     require_once('class/article.class.php');
     require_once('class/smarty/smarty.class.php');
+    require_once('class/comment.class.php');
+    require_once('class/user.class.php');
 
-    $connection = DB::get_connect();
-    Article::set_database($connection);
+     
 
 
     

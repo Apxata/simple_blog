@@ -1,5 +1,5 @@
 <?php 
-    class Article  {
+    class Article {
 
     public $id;
     public $author_id = 1;
@@ -9,8 +9,7 @@
     public $full_text;
     public $subject;
     public $visible;
-    static protected $connection;
-    
+    public $connection;
 
     public $errors = [];
 
@@ -22,27 +21,26 @@
         (isset($args['full_text'])) ? $this->full_text = $args['full_text'] : $this->full_text = ''; 
         (isset($args['subject'])) ? $this->subject = $args['subject'] : $this->subject = ''; 
         (isset($args['visible'])) ? $this->visible = $args['visible'] : $this->visible = ''; 
-        
+        $this->connection = DB::get_connect();
     }
-
-    static public function set_database($connection) {
-        self::$connection = $connection;
-      }
 
     static public function find_all_articles(){
-        $articles = $connection->query("SELECT * FROM articles ORDER BY create_date DESC ");
-        return $articles;
+        $static_connection = DB::get_connect();
+
+        $articles = $static_connection->query("SELECT * FROM articles ORDER BY create_date DESC ");
+        return $articles->fetchAll();
     }
 
-    
-
-    public function find_article_by_id($id){
-        $sth = self::$connection->prepare(
+    static public function find_article_by_id($id){
+        $static_connection = DB::get_connect();
+        
+        $sth = $static_connection->prepare(
             "SELECT * FROM articles WHERE id = :id ORDER BY create_date DESC "
         );
          $sth->execute(['id' => $id]);
          $article = $sth->fetchAll();
          return array_shift($article);
+        
     }
     // Надо переделать под пагинацию
 
@@ -99,7 +97,7 @@
             'visible' => $this->visible
         ]);
 
-        return isset($sth->errorInfo()[2]) ? true : $sth->errorInfo()[2];
+        return !isset($sth->errorInfo()[2]) ?  true : $sth->errorInfo()[2];
     
     }
 
@@ -120,7 +118,7 @@
             'visible' => $this->visible
         ]);
 
-        return isset($sth->errorInfo()[2]) ? true : $sth->errorInfo()[2];
+        return !isset($sth->errorInfo()[2]) ?  true : $sth->errorInfo()[2];
     }
 
     protected function validate() {
