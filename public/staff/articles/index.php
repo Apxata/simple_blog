@@ -3,10 +3,10 @@
 $page_title = 'Статьи'; 
 
 // Connect to db
-$connection = DB::get_connect(); 
+//$connection = DB::get_connect(); 
 
 // Делаем запрос и получаем все статьи
-$articles = Article::find_all_articles($connection);
+$articles = Article::find_all_articles();
 
 // Обрабатываем текст, чтобы показывал разметку маркдаун
 $Parsedown = new Parsedown();

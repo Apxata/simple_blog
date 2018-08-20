@@ -12,9 +12,9 @@ if(is_post_request()) {
     $args = $_POST['article'];
     // $args['author_id'] = $_SESSION['user_id'];
 
-    $connect = DB::get_connect(); 
+    //$connect = DB::get_connect(); 
     $article = new Article($args);
-    $result = $article->create($connect);
+    $result = $article->create();
    
 
 } else {

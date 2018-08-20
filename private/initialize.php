@@ -21,5 +21,8 @@
     require_once('class/article.class.php');
     require_once('class/smarty/smarty.class.php');
 
+    $connection = DB::get_connect();
+    Article::set_database($connection);
+
 
     
