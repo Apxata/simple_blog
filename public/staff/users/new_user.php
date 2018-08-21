@@ -1,7 +1,7 @@
 <?php 
     require_once('../../../private/initialize.php'); 
     // login_required();
-    $result['errors'] = "";
+    
 
     if(is_post_request()) {
         
@@ -9,15 +9,15 @@
         
         $user = new User($args);
         $result = $user->create();
-
+        
         if($result == true) {
             $new_id = $user->id;
             $_SESSION['message'] = 'Новый пользователь успешно добавлен';
-            redirect_to(url_for('/staff/users/index.php'));
+            redirect_to(root_path('/staff/users/index.php'));
             
         } else {
                 // ошибка
-                echo "что-то пошло не так" ;
+              
                
         }
     }   else {
@@ -31,7 +31,9 @@
 
  //Подключаем шаблонизатор СМАРТИ
  $smarty = new Smarty;
- $smarty->assign('errors', $result);
+    if(isset($user->errors)){
+     $smarty->assign('errors', $user->errors );
+    }
  $smarty->display(PUBLIC_PATH . ('/tpls/staff/users/new_user.tpl'));
  
  //подключаем футер

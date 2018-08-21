@@ -7,7 +7,7 @@
     $users = User::find_all_users();
     
     
- //  ----   ПОДКЛЮЧАЕМ ВЫВОД НА СТРАНИЦУ
+ //  ----   ПОДКЛЮЧАЕМ ОТОБРАЖЕНИЕ СТРАНИЦЫ
 
  //подключаем заголовок
 include(SHARED_PATH . '/staff_header.php'); 

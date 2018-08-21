@@ -8,7 +8,7 @@ class User  {
 
     public $id;
     public $email;
-    static protected $hashed_password;
+    protected $hashed_password;
     public $password;
     public $confirm_password;
     public $reg_date;
@@ -45,20 +45,17 @@ class User  {
         } else {
             $this->first_name = ''; 
         }
-
         if (isset($args['last_name'])) {
             $this->last_name = $args['last_name'];
         } else {
             $this->last_name = ''; 
         }
-
         if (isset($args['deleted'])) {
             $this->deleted = $args['deleted'];
         } else {
             $this->deleted = 0; 
         }
-
-        $connection = DB::get_connect();
+        $this->connection = DB::get_connect();
     }
 
     protected function validate() {
@@ -107,19 +104,30 @@ class User  {
         $static_connection = DB::get_connect();
         
         $sth = $static_connection->prepare(
-            "SELECT * FROM users WHERE email = :email "
+            "SELECT * FROM users WHERE email = :email AND deleted = 0 "
         );
         $sth->execute(['email' => $email]);
         $article = $sth->fetchAll();
         return array_shift($article);
     }
 
-    protected function set_hashed_password() {
-        self::$hashed_password = password_hash($this->password, PASSWORD_BCRYPT);
+    static public function find_user_by_id($id){
+        $static_connection = DB::get_connect();
+        
+        $sth = $static_connection->prepare(
+            "SELECT * FROM users WHERE id = :id "
+        );
+        $sth->execute(['id' => $id]);
+        $article = $sth->fetchAll();
+        return array_shift($article);
     }
 
-    public static function verify_pas($password){
-        return password_verify($password, self::$hashed_password);
+    protected function set_hashed_password() {
+        $this->hashed_password = password_hash($this->password, PASSWORD_BCRYPT);
+    }
+
+    public function verify_pas($password){
+        return password_verify($password, $this->$hashed_password);
     }
 
     public static function find_all_users() {
@@ -127,33 +135,56 @@ class User  {
     
             $users = $static_connection->query("SELECT * FROM users ORDER BY email ASC ");
             return $users->fetchAll();
-        
     }
 
-    // надо написать апдейт 
-    // protected function update(){
-    //     if($this->password != '' ) {
-    //         //validate
-    //         $this->set_hashed_password();
-    //     }else {
-    //         // пропустить хеширование и проверку пароля
-    //         $this->password_required = false;
-    //     }
-    //     return parent::update();
-    // }
+    public function update(){
+        if($this->password != '' ) {
+            //validate
+          $this->set_hashed_password();
+        }else {
+            // пропустить хеширование и проверку пароля
+            $this->password_required = false;
+        }
+        $this->validate();
+        if(!empty($this->errors)) {return false;}
+
+        $sth = $this->connection->prepare(
+            "UPDATE users SET  
+            email = :email,  
+            hashed_password = :hashed_password, 
+            deleted = :deleted 
+            WHERE id = :id
+            LIMIT 1 "
+        );
+
+        $result = $sth->execute([
+            'email' => $this->email,
+            'hashed_password' => $this->hashed_password,
+            'deleted' => $this->deleted,
+            'id' => $this->id
+        ]);
+        
+        $this->id = $this->connection->lastInsertId();
+        return !isset($sth->errorInfo()[2]) ?  true : $sth->errorInfo()[2];
+
+    }
 
     public function create()  { 
         // Валидация на ввод верных данных
         $this->validate();
         if(!empty($this->errors)) {return false;}
 
+        $this->set_hashed_password();
+       
         $sth = $this->connection->prepare(
             "INSERT INTO users (
+                email,
                 hashed_password,
                 first_name,
                 last_name,
                 deleted
             ) values (
+                :email,
                 :hashed_password,
                 :first_name,
                 :last_name,
@@ -161,15 +192,24 @@ class User  {
             )"
         );
 
-        $sth->execute([
-            'hashed_password' => $this->set_hashed_password(),
+        $result = $sth->execute([
+            'email' => $this->email,
+            'hashed_password' => $this->hashed_password,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'deleted' => $this->deleted
         ]);
-         
+        
+        $this->id = $this->connection->lastInsertId();
         return !isset($sth->errorInfo()[2]) ?  true : $sth->errorInfo()[2];
-    
+    }
+
+    public function merge_attributes($args=[]){
+        foreach($args as $key => $value) {
+            if(property_exists($this, $key) && !is_null($value)) {
+                $this->$key = $value;
+            }
+        }
     }
         
 }

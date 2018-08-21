@@ -110,7 +110,9 @@
         if(!empty($this->errors)) {return false;}
 
         $sth = $this->connection->prepare(
-            "UPDATE articles SET preview_text = :preview_text, full_text = :full_text, subject = :subject, visible = :visible WHERE id = :id LIMIT 1 "
+            "UPDATE articles SET preview_text = :preview_text, 
+             full_text = :full_text, subject = :subject, 
+             visible = :visible WHERE id = :id LIMIT 1 "
         );
 
         $sth->execute([
