@@ -99,8 +99,9 @@
   // * For existing records, provide current ID as second argument
   //   has_unique_username('johnqpublic', 4)
   function has_unique_email($email, $current_id="0") {
-    $user = User::find_by_email($email);
-    if($user === false || $user->id == $current_id) {
+    $user = User::find_user_by_email($email);
+    // test($user);
+    if($user === false || $user['id'] == $current_id) {
       // unique
       return true;
     } else {

@@ -43,7 +43,7 @@ $password = '';
             $session->login($user);
             redirect_to('articles/index.php');
         }else {
-            test(User::verify_pas($password));
+            // test(User::verify_pas($password));
             // что-то пошло не так, выводим ошибку
            echo $errors[] = "Попытка входа была неуспешной.";
         }

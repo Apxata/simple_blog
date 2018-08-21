@@ -16,6 +16,7 @@ class User  {
     public $last_name;
     public $deleted;
     protected $password_required = true;
+    public $connection;
 
     public function __construct($args=[]) {
 
@@ -56,6 +57,8 @@ class User  {
         } else {
             $this->deleted = 0; 
         }
+
+        $connection = DB::get_connect();
     }
 
     protected function validate() {
@@ -112,19 +115,20 @@ class User  {
     }
 
     protected function set_hashed_password() {
-        $this->hashed_password = password_hash($this->password, PASSWORD_BCRYPT);
+        self::$hashed_password = password_hash($this->password, PASSWORD_BCRYPT);
     }
 
     public static function verify_pas($password){
         return password_verify($password, self::$hashed_password);
     }
-    
-    // Надо сделать create
-    // protected function create() {
-    //     $this->set_hashed_password();
-    //     return parent::create();
 
-    // }
+    public static function find_all_users() {
+            $static_connection = DB::get_connect();
+    
+            $users = $static_connection->query("SELECT * FROM users ORDER BY email ASC ");
+            return $users->fetchAll();
+        
+    }
 
     // надо написать апдейт 
     // protected function update(){
@@ -137,6 +141,36 @@ class User  {
     //     }
     //     return parent::update();
     // }
+
+    public function create()  { 
+        // Валидация на ввод верных данных
+        $this->validate();
+        if(!empty($this->errors)) {return false;}
+
+        $sth = $this->connection->prepare(
+            "INSERT INTO users (
+                hashed_password,
+                first_name,
+                last_name,
+                deleted
+            ) values (
+                :hashed_password,
+                :first_name,
+                :last_name,
+                :deleted
+            )"
+        );
+
+        $sth->execute([
+            'hashed_password' => $this->set_hashed_password(),
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'deleted' => $this->deleted
+        ]);
+         
+        return !isset($sth->errorInfo()[2]) ?  true : $sth->errorInfo()[2];
+    
+    }
         
 }
 
