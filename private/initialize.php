@@ -15,7 +15,8 @@
     require_once('Parsedown.php');
     require_once('singletone.db.php');
     require_once('validation_functions.php');
-    
+    require_once('status_error_functions.php');
+    require_once('test.php');
 
     // CLASSES
     require_once('class/article.class.php');
@@ -23,6 +24,9 @@
     require_once('class/comment.class.php');
     require_once('class/user.class.php');
     require_once('class/pagination.class.php');
+    require_once('class/session.class.php');
+    
+
 
      
 

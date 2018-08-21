@@ -47,7 +47,6 @@
          $sth->execute(['id' => $id]);
          $article = $sth->fetchAll();
          return array_shift($article);
-        
     }
     
     public static function find_all_articles_per_page($per_page, $offset){
