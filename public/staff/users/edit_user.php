@@ -16,11 +16,11 @@
         $args = $_POST['user'];
         $user = new User($args);
         // $user->merge_attributes($args);
-        $result = $user->update();
+        $result = $user->update($id);
 
         if($result == true) {
             $_SESSION['message'] = 'Пользователь успешно обновлен';
-            redirect_to(url_for('/staff/users/index.php'));
+            redirect_to(root_path('/staff/users/index.php'));
         } else {
                 // ошибка
                 echo "ошибка";

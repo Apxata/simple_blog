@@ -69,9 +69,7 @@ class User  {
             $this->errors[] = "Почта не может быть длинее 255 символов";
         }elseif (!has_valid_email_format($this->email)) {
             $this->errors[] = "Почта неверного формата";
-        }elseif (!has_unique_email($this->email, $this->id)) {
-            $this->errors[] = "Почта уже используется";
-        }          
+        }     
         
         if($this->password_required){
 
@@ -89,7 +87,9 @@ class User  {
             //     $this->errors[] = "Пароль должен содержать минимум 1 спец символ";
             } elseif (!preg_match('/^[A-Z0-9]+$/i', $this->password)) {
                 $this->errors[] = "Пароль может содержать только латинские буквы и цфры";
-            }
+            } elseif (!has_unique_email($this->email, $this->id)) {
+                $this->errors[] = "Почта уже используется";
+            }     
 
             if(is_blank($this->confirm_password)) {
                 $this->errors[] = "Введите свой пароль повторно";
@@ -137,7 +137,7 @@ class User  {
             return $users->fetchAll();
     }
 
-    public function update(){
+    public function update($id){
         if($this->password != '' ) {
             //validate
           $this->set_hashed_password();
@@ -161,7 +161,7 @@ class User  {
             'email' => $this->email,
             'hashed_password' => $this->hashed_password,
             'deleted' => $this->deleted,
-            'id' => $this->id
+            'id' => $id
         ]);
         
         $this->id = $this->connection->lastInsertId();
