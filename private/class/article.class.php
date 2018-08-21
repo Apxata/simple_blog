@@ -24,6 +24,13 @@
         $this->connection = DB::get_connect();
     }
 
+    static public function count_all(){
+        $static_connection = DB::get_connect();
+
+        $articles = $static_connection->query("SELECT COUNT(*) FROM articles ");
+        return (int) $articles->fetchColumn()[0];
+    }
+
     static public function find_all_articles(){
         $static_connection = DB::get_connect();
 
@@ -42,33 +49,30 @@
          return array_shift($article);
         
     }
-    // Надо переделать под пагинацию
+    
+    public static function find_all_articles_per_page($per_page, $offset){
+        $static_connection = DB::get_connect();
+        $static_connection->setAttribute( PDO::ATTR_EMULATE_PREPARES, false );
 
-    // public function find_all_articles_per_page($per_page, $offset){
-    //     global $database;
-        
-    //     $sql = "SELECT * FROM articles ";
-    //     $sql .= " ORDER BY create_date DESC ";
-    //     $sql .= " LIMIT {$per_page} ";
-    //     $sql .= "OFFSET {$offset} ";
-    //     $result = fetch_all($sql);
-    //     return $result;
-    // }
+        $sth = $static_connection->prepare('
+            SELECT * FROM articles ORDER BY create_date DESC LIMIT ? OFFSET ?
+        ');
+        $sth->execute([$per_page, $offset]);
+        return $sth->fetchAll();
+    }
 
-    // public function find_all_articles_per_page_visible($per_page, $offset){
-    //     global $database;
+    public static function find_all_visible_articles_per_page($per_page, $offset){
+        $static_connection = DB::get_connect();
+        $static_connection->setAttribute( PDO::ATTR_EMULATE_PREPARES, false );
 
-    //     $sql = "SELECT * FROM articles " ;
-    //     $sql .= " WHERE visible = 1 ";
-    //     $sql .= " ORDER BY create_date DESC ";
-    //     $sql .= " LIMIT {$per_page} ";
-    //     $sql .= " OFFSET {$offset} ";
-    //     $result = fetch_all($sql);
-    //     return $result;
-    // }
+        $sth = $static_connection->prepare('
+            SELECT * FROM articles WHERE visible = 1 ORDER BY create_date DESC LIMIT ? OFFSET ?
+        ');
+        $sth->execute([$per_page, $offset]);
+        return $sth->fetchAll();
+    }
 
     public function create()  { 
-    
         // Валидация на ввод верных данных
         $this->validate();
         if(!empty($this->errors)) {return false;}
