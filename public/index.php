@@ -1,3 +1,34 @@
-<?php 
+<?php require_once('../private/initialize.php'); 
+ 
+//ищем статьи постранично
+if (isset($_GET['page'])){
+    $current_page = $_GET['page'];
+}else {
+    $current_page = 1 ;
+}
+$per_page = 10 ;
+$total_count = Article::count_all_visible();
 
-echo "Hello world"; 
+$pagination = new Pagination($current_page, $per_page, $total_count);
+$offset = $pagination->offset();
+
+$articles = Article::find_all_visible_articles_per_page($per_page, $offset);
+$Parsedown = new Parsedown();
+foreach ($articles as &$a) {
+    $a['full_text'] =  nl2br($Parsedown->text($a['full_text']));
+}
+
+//Подключаем шаблонизатор СМАРТИ
+$smarty = new Smarty;
+$smarty->assign('articles', $articles);
+
+    // <!-- подключаем футер -->
+include(SHARED_PATH . '/public_header.php');
+
+$smarty->display(PUBLIC_PATH . ('/tpls/public/index.tpl'));
+//Вывод пагинации
+$url = root_path('/index.php');
+echo $pagination->page_links();
+
+include(SHARED_PATH . '/public_footer.php'); 
+ 

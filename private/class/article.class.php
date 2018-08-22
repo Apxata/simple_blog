@@ -31,6 +31,13 @@
         return (int) $articles->fetchColumn()[0];
     }
 
+    static public function count_all_visible(){
+        $static_connection = DB::get_connect();
+
+        $articles = $static_connection->query("SELECT COUNT(*) FROM articles WHERE visible = 1 ");
+        return (int) $articles->fetchColumn()[0];
+    }
+
     static public function find_all_articles(){
         $static_connection = DB::get_connect();
 
