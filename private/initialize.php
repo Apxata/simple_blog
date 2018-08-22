@@ -26,6 +26,7 @@
     require_once('class/pagination.class.php');
     require_once('class/session.class.php');
     
+    $session = new Session;
 
 
      

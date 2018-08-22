@@ -34,7 +34,7 @@
                                     <li><a href="<?php echo root_path('/staff/index.php'); ?>">Главная</a></li> 
                                     <li><a href="<?php echo root_path('/staff/articles/index.php'); ?>">Статьи</a></li>
                                     <li ><a href=<?php echo root_path('/staff/users/index.php'); ?>>Пользователи</a></li>
-                                    <li ><a href="../logout.php">Выйти</a></li>
+                                    <li ><a href="<?php echo root_path('/staff/logout.php'); ?>">Выйти</a></li>
                                 <?php // } ?>
                                 </ul>
                                 <form class="navbar-form navbar-left">

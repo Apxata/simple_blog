@@ -1,6 +1,6 @@
 <?php 
     require_once('../../../private/initialize.php'); 
-    // login_required();
+    login_required();
     $page_title = 'Статьи'; 
 
     //ищем всех пользователей

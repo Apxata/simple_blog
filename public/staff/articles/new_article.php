@@ -1,6 +1,7 @@
 <?php require_once('../../../private/initialize.php'); 
 
-//login_required();
+login_required();
+
 $page_title = 'Добавление статьи'; 
 $errors = [];
 $_SESSION['message']= "";
@@ -8,14 +9,10 @@ $_SESSION['message']= "";
 if(is_post_request()) {
     
     // create a RECORD using this params
-    
     $args = $_POST['article'];
-    // $args['author_id'] = $_SESSION['user_id'];
-
-    //$connect = DB::get_connect(); 
+    $args['author_id'] = $session->user_id;
     $article = new Article($args);
     $result = $article->create();
-   
 
 } else {
    // $article = new Article;

@@ -1,7 +1,7 @@
 <?php 
 
     class Session {
-        private $user_id;
+        public $user_id;
         public $email;
         private $last_login;
        
@@ -15,8 +15,8 @@
             if($user) {
                 //session fixation attack
                 session_regenerate_id();
-                $this->user_id = $_SESSION['user_id'] = $user->id;
-                $this->email = $_SESSION['email']= $user->email;
+                $this->user_id = $_SESSION['user_id'] = $user['id'];
+                $this->email = $_SESSION['email']= $user['email'];
                 $this->last_login = $_SESSION['last_login'] = time();
             }
             return true;

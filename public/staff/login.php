@@ -34,13 +34,16 @@ $password = '';
     //если не было ошибок, пробуем залогиниться
 
     if(empty($errors)) {
-        $user = User::find_user_by_email($email);
+       
+        $user = User::find_user_by_email_not_deleted($email);
         // test($user);
         // если почта найдена и пароль верный 
         
-        if($user != false && User::verify_pas($password)) {
+        if($user != false && password_verify($password, $user['hashed_password'])) {
             // помечаем пользователя как залогиненного 
+            
             $session->login($user);
+           
             redirect_to('articles/index.php');
         }else {
             // test(User::verify_pas($password));

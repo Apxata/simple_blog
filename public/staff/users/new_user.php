@@ -1,8 +1,8 @@
 <?php 
     require_once('../../../private/initialize.php'); 
-    // login_required();
-    
 
+    login_required();
+    
     if(is_post_request()) {
         
         $args = $_POST['user'];
@@ -17,8 +17,6 @@
             
         } else {
                 // ошибка
-              
-               
         }
     }   else {
         $user = new User;

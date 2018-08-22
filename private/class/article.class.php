@@ -14,7 +14,7 @@
     public $errors = [];
 
     public function __construct($args=[]) {
-        (isset($args['author_id'])) ?  $this->author_id = $args['author_id'] : $this->author_id = 1;
+        (isset($args['author_id'])) ?  $this->author_id = $args['author_id'] : $this->author_id = '';
         (isset($args['create_date'])) ? $this->create_date = $args['create_date'] : $this->create_date = ''; 
         (isset($args['last_edit_date'])) ? $this->last_edit_date = $args['last_edit_date'] : $this->last_edit_date = ''; 
         (isset($args['preview_text'])) ? $this->preview_text = $args['preview_text'] : $this->preview_text = ''; 

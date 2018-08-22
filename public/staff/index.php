@@ -1,4 +1,6 @@
-<?php require_once('../../private/initialize.php'); ?>
+<?php require_once('../../private/initialize.php'); 
+login_required();
+?>
 
 <?php $page_title = 'Главная админка'; ?>
 <?php include(SHARED_PATH . '/staff_header.php'); ?>
@@ -9,6 +11,7 @@
       <div class="row">
         <div class="article-list col-md-8 col-md-offset-1">
             <h2>Главное меню</h2>
+            <?php echo $session->email; ?>
             <ul>
                 <li><a href="articles/index.php"> Статьи</a></li>
             </ul>

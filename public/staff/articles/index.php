@@ -1,6 +1,7 @@
 <?php require_once('../../../private/initialize.php'); 
 
-// login_required();
+login_required();
+
 $page_title = 'Статьи'; 
 
 // $articles = Article::find_all_articles();

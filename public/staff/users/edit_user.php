@@ -1,6 +1,7 @@
 <?php 
     require_once('../../../private/initialize.php'); 
-    // login_required();
+    
+    login_required();
     
     if(!isset($_GET['id'])) {
         redirect_to(root_path('/staff/users/index.php'));
@@ -15,7 +16,6 @@
        
         $args = $_POST['user'];
         $user = new User($args);
-        // $user->merge_attributes($args);
         $result = $user->update($id);
 
         if($result == true) {
