@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.32, created on 2018-08-24 17:18:30
+/* Smarty version 3.1.32, created on 2018-08-24 18:20:04
   from 'C:\xampp\htdocs\simple_blog\public\tpls\public\index.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.32',
-  'unifunc' => 'content_5b8021c6537e87_75528033',
+  'unifunc' => 'content_5b8030349f5f71_52012859',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '6f4ddf365e3a737f1c695fbcfa3aba5d170b6501' => 
     array (
       0 => 'C:\\xampp\\htdocs\\simple_blog\\public\\tpls\\public\\index.tpl',
-      1 => 1535123905,
+      1 => 1535127489,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5b8021c6537e87_75528033 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5b8030349f5f71_52012859 (Smarty_Internal_Template $_smarty_tpl) {
 ?><div class="main">
     <div class="content container">
       <div class="row">
@@ -40,7 +40,7 @@ foreach ($_from as $_smarty_tpl->tpl_vars['article']->value) {
 </div>
                     <!-- a-content -->
                     <div class="a-footer"><a href="show.php?article_id=<?php echo $_smarty_tpl->tpl_vars['article']->value['id'];?>
-"><?php echo $_smarty_tpl->tpl_vars['comments']->value[0];?>
+"><?php echo $_smarty_tpl->tpl_vars['article']->value['count_comments'];?>
  коммент.</a></div>
             </div>
             <?php

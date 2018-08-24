@@ -13,7 +13,7 @@
     $text_comment = $_POST['comment'];
     $user_id = (int) $session->user_id;
     
-    $comment = new Comment($user_id, $text_comment, $deleted);
+    $comment = new Comment($user_id, $article_id, $text_comment, $deleted);
     $result = $comment->create();
     
     } else {
@@ -29,7 +29,7 @@
     // Пагинация для комментов
     
     // ищем всем комменты
-    $comments = Comment::find_all_comments_with_email();
+    $comments = Comment::find_all_comments_with_email($article_id);
     // test($comments);
 
     //Подключаем шаблонизатор СМАРТИ

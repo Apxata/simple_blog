@@ -6,17 +6,24 @@ class Comment {
 
     public $id;
     public $user_id;
+    public $article_id;
     public $date_create;
     public $comment;
     public $deleted = 0;
     public $connection;
 
-    public function __construct($user_id, $text_comment, $deleted=0) {
+    public function __construct($user_id, $article_id, $text_comment, $deleted=0) {
        
         if (isset($user_id)) {
             $this->user_id = $user_id;
         } else {
             $this->user_id = ''; 
+        }
+
+        if (isset($article_id)) {
+            $this->article_id = $article_id;
+        } else {
+            $this->article_id = ''; 
         }
         
         if (isset($args['date_create'])) {
@@ -48,18 +55,28 @@ class Comment {
     //     $result = static::find_by_sql($sql);
     //     return $result;
     // }
-    static public function find_all_comments_with_email() {
+    static public function find_all_comments_with_email($article_id) {
         $static_connection = DB::get_connect();
 
-        $comments = $static_connection->query("SELECT * FROM comments JOIN (users) ON (comments.user_id = users.id) ORDER BY comments.date_create DESC ");
-        return $comments->fetchAll();
-       }
-
-    static public function count_all_comments(){
+        $sth = $static_connection->prepare(
+            "SELECT * FROM comments JOIN (users) ON (comments.user_id = users.id)
+            WHERE article_id = :article_id
+            ORDER BY comments.date_create DESC "
+        );
+        $sth->execute([
+            "article_id" => $article_id
+        ]);
+        return $sth->fetchAll();
+    }
+    
+    static public function count_all_comments($article_id){
         $static_connection = DB::get_connect();
 
-        $comments = $static_connection->query("SELECT COUNT(*) FROM comments ");
-        return $comments->fetchAll(PDO::FETCH_COLUMN);
+        $sth = $static_connection->prepare("SELECT COUNT(*) FROM comments WHERE article_id = :article_id ");
+        $sth->execute ([
+            "article_id" => $article_id
+        ]);
+        return ($sth->fetchAll(PDO::FETCH_COLUMN));
     }
            
     static public function find_all_per_page_visible($per_page, $offset){
@@ -100,10 +117,12 @@ class Comment {
         $sth = $this->connection->prepare(
             "INSERT INTO comments (
                 user_id,
+                article_id,
                 comment,
                 deleted
             ) values (
                 :user_id,
+                :article_id,
                 :comment,
                 :deleted
             )"
@@ -111,6 +130,7 @@ class Comment {
 
         $sth->execute([
             'user_id' => $this->user_id,
+            'article_id' => $this->article_id,
             'comment' => $this->comment,
             'deleted' => $this->deleted
         ]);
