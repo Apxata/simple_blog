@@ -9,7 +9,7 @@
                     <div class="a-info">{$article['create_date']}</div>
                     <div class="a-content">{$article['full_text']}</div>
                     <!-- a-content -->
-                    <div class="a-footer"><a href="show.php?article_id={$article.id}">0 комментариев</a></div>
+                    <div class="a-footer"><a href="show.php?article_id={$article.id}">{$comments[0]} коммент.</a></div>
             </div>
             {/foreach}
             <!-- article -->

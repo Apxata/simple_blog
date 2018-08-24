@@ -54,7 +54,14 @@ class Comment {
         $comments = $static_connection->query("SELECT * FROM comments JOIN (users) ON (comments.user_id = users.id) ORDER BY comments.date_create DESC ");
         return $comments->fetchAll();
        }
-    
+
+    static public function count_all_comments(){
+        $static_connection = DB::get_connect();
+
+        $comments = $static_connection->query("SELECT COUNT(*) FROM comments ");
+        return $comments->fetchAll(PDO::FETCH_COLUMN);
+    }
+           
     static public function find_all_per_page_visible($per_page, $offset){
         //$offset = self::$database->escape_string($offset);
         $sql = "SELECT * FROM " . static::$table_name;

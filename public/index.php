@@ -18,9 +18,12 @@ foreach ($articles as &$a) {
     $a['full_text'] =  nl2br($Parsedown->text($a['full_text']));
 }
 
+$count_comments = Comment::count_all_comments();
+
 //Подключаем шаблонизатор СМАРТИ
 $smarty = new Smarty;
 $smarty->assign('articles', $articles);
+$smarty->assign('comments', $count_comments);
 
     // <!-- подключаем футер -->
 include(SHARED_PATH . '/public_header.php');
