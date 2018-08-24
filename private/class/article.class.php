@@ -108,7 +108,6 @@
         ]);
 
         return !isset($sth->errorInfo()[2]) ?  true : $sth->errorInfo()[2];
-    
     }
 
     public function update($id){

@@ -8,18 +8,19 @@
                     <div class="a-content">{$article['full_text']}</div><!-- a-content -->
                     <div class="a-footer"></div>
             </div>  <!-- article -->
-            <form>
-            <textarea class="form-control" rows="1"></textarea>    
+            {if isset($session)}
+            <form action="show.php?article_id={$article_id}" method="post">
+            <textarea name=comment class="form-control" rows="1"></textarea>    
             <button type="submit" class="btn btn-default">Отправить</button>
             </form>
+            {/if}
             <!-- вывод комментов  -->
+            {foreach $comments as $comment} 
             <div class="panel panel-primary">
-            <div class="panel-heading">
-                Никнейм
+            <div class="panel-heading">  {$comment['email']} </div>
+            <div class="panel-body"> {$comment['comment']}</div>
             </div>
-            <div class="panel-body">Здесь будет написан коммент для новости</div>
-            </div>
-              
+            {/foreach}              
             </div><!-- comments    -->
           
          </div>

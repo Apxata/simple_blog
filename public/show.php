@@ -1,31 +1,50 @@
 <?php require_once('../private/initialize.php'); 
- 
-    //ищем статьи постранично
+    
+    // проверка на передачу айди статьи
     if (isset($_GET['article_id'])){
-        $article_id = $_GET['article_id'];
+        $article_id = (int) $_GET['article_id'];
     } else {
         redirect_to('index.php');
     }
+    $deleted = 0;
 
-    // $per_page = 10 ;
-    // $total_count = Article::count_all_visible();
+    if (is_post_request()) {
+         // создаем новый комент
+    $text_comment = $_POST['comment'];
+    $user_id = (int) $session->user_id;
     
-    // $pagination = new Pagination($current_page, $per_page, $total_count);
+    $comment = new Comment($user_id, $text_comment, $deleted);
+    $result = $comment->create();
+    
+    } else {
+    // $article = new Article;
+    }
 
-    // $offset = $pagination->offset();
+    // Ищем статью по айди 
     $article = Article::find_article_by_id($article_id);
   
     $Parsedown = new Parsedown();
         $article['full_text'] =  nl2br($Parsedown->text($article['full_text']));
 
     // Пагинация для комментов
-    // $url = url_for('/index.php');
-    // echo $pagination->page_links();
+    
+    // ищем всем комменты
+    $comments = Comment::find_all_comments_with_email();
+    // test($comments);
 
     //Подключаем шаблонизатор СМАРТИ
     $smarty = new Smarty;
+    // передаем статью шаблонизатору
     $smarty->assign('article', $article);
-        
+    $smarty->assign('article_id', $article_id);
+    $smarty->assign('comments', $comments);
+
+    // провряем есть ли айди у пользователя, тогда показывает форму ответа.
+    // если нет говорим что нужно залогиниться.
+    if(isset($session)){
+        $smarty->assign('session', $session);  
+    }    
+
     include(SHARED_PATH . '/public_header.php');
 
     $smarty->display(PUBLIC_PATH . ('/tpls/public/show.tpl'));

@@ -110,6 +110,17 @@ class User  {
         return array_shift($article);
     }
 
+    // static public function find_email_by_user_id($user_id){
+    //     $static_connection = DB::get_connect();
+        
+    //     $sth = $static_connection->prepare(
+    //         "SELECT email FROM users WHERE email = :email "
+    //     );
+    //     $sth->execute(['email' => $email]);
+    //     $article = $sth->fetchAll();
+    //     return array_shift($article);
+    // }
+
     static public function find_user_by_email_not_deleted($email){
         $static_connection = DB::get_connect();
         
