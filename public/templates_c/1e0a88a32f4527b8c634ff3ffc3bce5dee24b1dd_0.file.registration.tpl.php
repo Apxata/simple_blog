@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.32, created on 2018-09-12 16:17:32
+/* Smarty version 3.1.32, created on 2018-09-12 16:35:08
   from 'C:\WinNMP\WWW\apxat.ru\public\tpls\registration.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.32',
-  'unifunc' => 'content_5b993c1c30fb67_03416399',
+  'unifunc' => 'content_5b99403c5f42d6_18053744',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '1e0a88a32f4527b8c634ff3ffc3bce5dee24b1dd' => 
     array (
       0 => 'C:\\WinNMP\\WWW\\apxat.ru\\public\\tpls\\registration.tpl',
-      1 => 1536735922,
+      1 => 1536770106,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5b993c1c30fb67_03416399 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5b99403c5f42d6_18053744 (Smarty_Internal_Template $_smarty_tpl) {
 ?><div class="main">
     <div class="content container">
         <div class="row">
@@ -53,7 +53,7 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
                     <div class="form-group">
                         <label for="nickname" class="col-sm-2 control-label">Ингейм ник мейна</label>
                         <div class="col-sm-10">
-                            <input type="text" name="user[nickname]" class="form-control" id="nickname" placeholder="Ингейм ник мейна" value="">
+                            <input type="text" name="user[nickname]" class="form-control" id="nickname" placeholder="Ваш псевдоним" value="">
                         </div>
                     </div>
                     <div class="form-group">

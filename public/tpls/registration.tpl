@@ -22,7 +22,7 @@
                     <div class="form-group">
                         <label for="nickname" class="col-sm-2 control-label">Ингейм ник мейна</label>
                         <div class="col-sm-10">
-                            <input type="text" name="user[nickname]" class="form-control" id="nickname" placeholder="Ингейм ник мейна" value="">
+                            <input type="text" name="user[nickname]" class="form-control" id="nickname" placeholder="Ваш псевдоним" value="">
                         </div>
                     </div>
                     <div class="form-group">

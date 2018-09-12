@@ -25,10 +25,20 @@
                        <!-- navbar header  -->
                        <div class="collapse navbar-collapse" id="collapse">
                             <ul class="nav navbar-nav navbar-right">
-                                    <li class="active"><a href="#">Главная</a></li>
-                                    <li ><a href="#">Обо мне</a></li>
-                                    <li><a href="#">Контакты</a></li>
-                                </ul>
+                                <li class="active"><a href="index.php">Главная</a></li>
+                                <li><a href="#">Обо мне</a></li>
+                                <li><a href="#">Контакты</a></li>
+                                <?php
+                                  if($session->is_logged_in()) {
+                                    echo '<li><a href="logout.php">Выйти</a></li>';
+                                  }
+                                  else {
+                                    echo '<li><a href="logout.php">Войти</a></li>';
+                                  }
+
+                                ;?>
+
+                            </ul>
                                 <form class="navbar-form navbar-left">
                                         <div class="form-group">
                                           <input type="text" class="form-control" placeholder="Поиск">
