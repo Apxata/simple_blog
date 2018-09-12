@@ -1,10 +1,10 @@
 <?php 
 
 function root_path($script_path) {
-    // добавляет лидирующий / если нет
-    // if($script_path[0] != '/') {
-    //     $script_path = "/" . $script_path;
-    // }
+//     добавляет лидирующий / если нет
+     if($script_path[0] != '/') {
+      $script_path = "/" . $script_path;
+     }
     return WWW_ROOT . $script_path;
 }
 
@@ -32,3 +32,8 @@ function u($string="") {
     header("Location: " . $location);
     exit;
   }
+
+function nl2br2($string) {
+    $string = str_replace(array("\r\n", "\r", "\n"), "<br />", $string);
+    return $string;
+}

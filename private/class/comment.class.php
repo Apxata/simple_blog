@@ -26,11 +26,11 @@ class Comment {
             $this->article_id = ''; 
         }
         
-        if (isset($args['date_create'])) {
-            $this->date_create = $args['date_create'];
-        } else {
-            $this->date_create = ''; 
-        }
+//        if (isset($args['date_create'])) {
+//            $this->date_create = $args['date_create'];
+//        } else {
+//            $this->date_create = '';
+//        }
 
         if (isset($text_comment)) {
             $this->comment = $text_comment;
@@ -76,7 +76,8 @@ class Comment {
         $sth->execute ([
             "article_id" => $article_id
         ]);
-        return ($sth->fetchAll(PDO::FETCH_COLUMN));
+        $result = $sth->fetchAll(PDO::FETCH_COLUMN);
+        return $result;
     }
            
     static public function find_all_per_page_visible($per_page, $offset){

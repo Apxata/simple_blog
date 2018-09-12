@@ -14,9 +14,10 @@ $offset = $pagination->offset();
 
 $articles = Article::find_all_visible_articles_per_page($per_page, $offset);
 $Parsedown = new Parsedown();
+$Parsedown->setSafeMode(true);
 
 foreach ($articles as &$a) {
-    $a['full_text'] =  nl2br($Parsedown->text($a['full_text']));
+    $a['full_text'] =  nl2br($Parsedown->line($a['full_text']));
     $comms = Comment::count_all_comments($a['id']);
     $a['count_comments'] = array_shift($comms);
 }

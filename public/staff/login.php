@@ -44,7 +44,7 @@ $password = '';
             
             $session->login($user);
            
-            redirect_to('articles/index.php');
+            redirect_to('index.php');
         }else {
             // test(User::verify_pas($password));
             // что-то пошло не так, выводим ошибку
@@ -52,12 +52,13 @@ $password = '';
         }
     }
 
-       
-include(SHARED_PATH . '/staff_header.php'); 
+
+include(SHARED_PATH . '/staff_header.php');
 
 $smarty = new Smarty;
 $smarty->assign('user', $email);
+
 $smarty->display(PUBLIC_PATH . ('/tpls/staff/login.tpl'));
 
-include(SHARED_PATH . '/staff_footer.php'); 
+//include(SHARED_PATH . '/staff_footer.php');
 

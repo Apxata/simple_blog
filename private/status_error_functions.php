@@ -2,7 +2,7 @@
 function login_required() {
     global $session;
     if(!$session->is_logged_in()) {
-        redirect_to(root_path('/staff/login.php'));
+        redirect_to(root_path('login.php'));
     }else {
         
     }
