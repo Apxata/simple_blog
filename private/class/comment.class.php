@@ -26,11 +26,11 @@ class Comment {
             $this->article_id = ''; 
         }
         
-//        if (isset($args['date_create'])) {
-//            $this->date_create = $args['date_create'];
-//        } else {
-//            $this->date_create = '';
-//        }
+        if (isset($args['date_create'])) {
+            $this->date_create = $args['date_create'];
+        } else {
+            $this->date_create = ''; 
+        }
 
         if (isset($text_comment)) {
             $this->comment = $text_comment;

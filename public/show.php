@@ -4,27 +4,30 @@
     if (isset($_GET['article_id'])){
         $article_id = (int) $_GET['article_id'];
     } else {
-        redirect_to('index.php');
+        redirect_to('articles.php');
     }
     $deleted = 0;
 
     if (is_post_request()) {
          // создаем новый комент
-    $text_comment = $_POST['comment'];
-    $user_id = (int) $session->user_id;
-    
-    $comment = new Comment($user_id, $article_id, $text_comment, $deleted);
-    $result = $comment->create();
-    
+        $text_comment = $_POST['comment'];
+        $user_id = (int) $session->user_id;
+
+        $comment = new Comment($user_id, $article_id, $text_comment, $deleted);
+        $result = $comment->create();
+        if($result) {
+          redirect_to("show.php?article_id=$article_id");
+        }
     } else {
-    // $article = new Article;
+
     }
 
     // Ищем статью по айди 
     $article = Article::find_article_by_id($article_id);
   
     $Parsedown = new Parsedown();
-        $article['full_text'] =  nl2br($Parsedown->text($article['full_text']));
+    $Parsedown->setSafeMode(true);
+        $article['full_text'] =  nl2br($Parsedown->line($article['full_text']));
 
     // Пагинация для комментов
     
@@ -41,12 +44,12 @@
 
     // провряем есть ли айди у пользователя, тогда показывает форму ответа.
     // если нет говорим что нужно залогиниться.
-    if(isset($session)){
+    if($session->is_logged_in()){
         $smarty->assign('session', $session);  
     }    
 
     include(SHARED_PATH . '/public_header.php');
 
-    $smarty->display(PUBLIC_PATH . ('/tpls/public/show.tpl'));
+    $smarty->display(PUBLIC_PATH . ('/tpls/show.tpl'));
     
     include(SHARED_PATH . '/public_footer.php');

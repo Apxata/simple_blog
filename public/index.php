@@ -21,8 +21,7 @@ foreach ($articles as &$a) {
     $comms = Comment::count_all_comments($a['id']);
     $a['count_comments'] = array_shift($comms);
 }
-// while ($articles) {
-// }
+
 //Подключаем шаблонизатор СМАРТИ
 $smarty = new Smarty;
 $smarty->assign('articles', $articles);
@@ -30,7 +29,7 @@ $smarty->assign('articles', $articles);
     // <!-- подключаем футер -->
 include(SHARED_PATH . '/public_header.php');
 
-$smarty->display(PUBLIC_PATH . ('/tpls/public/index.tpl'));
+$smarty->display(PUBLIC_PATH . ('/tpls/index.tpl'));
 //Вывод пагинации
 $url = root_path('/index.php');
 echo $pagination->page_links();
