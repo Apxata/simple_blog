@@ -4,7 +4,7 @@
     if (isset($_GET['article_id'])){
         $article_id = (int) $_GET['article_id'];
     } else {
-        redirect_to('articles.php');
+        redirect_to('index.php');
     }
     $deleted = 0;
 
