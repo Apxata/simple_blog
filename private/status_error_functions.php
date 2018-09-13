@@ -7,6 +7,15 @@ function login_required() {
         
     }
 }
+
+function login_required_private() {
+    global $session;
+    if(!$session->is_logged_in()) {
+        redirect_to(root_path('staff/login.php'));
+    }else {
+
+    }
+}
 function display_errors($errors=array()) {
   $output = '';
   if(!empty($errors)) {

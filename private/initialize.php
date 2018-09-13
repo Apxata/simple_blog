@@ -22,7 +22,7 @@
 
     // CLASSES
     require_once('class/article.class.php');
-    require_once('class/smarty/smarty.class.php');
+    require_once('class/smarty/Smarty.class.php');
     require_once('class/comment.class.php');
     require_once('class/user.class.php');
     require_once('class/pagination.class.php');

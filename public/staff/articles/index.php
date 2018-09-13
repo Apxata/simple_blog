@@ -39,7 +39,7 @@ include(SHARED_PATH . '/staff_header.php');
 //Подключаем шаблонизатор СМАРТИ
 $smarty = new Smarty;
 $smarty->assign('articles', $articles);
-$smarty->display(PUBLIC_PATH . ('/tpls/staff/articles/index.tpl'));
+$smarty->display(PUBLIC_PATH . ('/staff/tpls/articles/index.tpl'));
 
 //подключаем футер
 include(SHARED_PATH . '/staff_footer.php'); 

@@ -1,5 +1,5 @@
-<?php require_once('../../private/initialize.php'); 
-login_required();
+<?php require_once('../../private/initialize.php');
+login_required_private();
 ?>
 
 <?php $page_title = 'Главная админка'; ?>

@@ -58,7 +58,7 @@ include(SHARED_PATH . '/staff_header.php');
 $smarty = new Smarty;
 $smarty->assign('user', $email);
 
-$smarty->display(PUBLIC_PATH . ('/tpls/staff/login.tpl'));
+$smarty->display(PUBLIC_PATH . ('/staff/tpls/login.tpl'));
 
 //include(SHARED_PATH . '/staff_footer.php');
 
