@@ -16,7 +16,7 @@
                     <div class="a-footer">
                     <div class="comments"> 0 комментариев </div>
                     <div class="editing col-sm-offset-6"><a href="edit.php?id={$article['id']}">Редактировать</a></div>
-                    <div class="visible"> Статья показывается:</div>
+                    <div class="visible"> Статья показывается:{if $article['visible'] eq 1 } ДА {else} НЕТ {/if}</div>
                      </div> <!-- a-footer -->
                
             </div>

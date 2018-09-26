@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.32, created on 2018-09-13 16:40:27
+/* Smarty version 3.1.32, created on 2018-09-26 17:10:39
   from 'C:\WinNMP\WWW\apxat\public\staff\tpls\articles\index.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.32',
-  'unifunc' => 'content_5b9a92fb4cc799_65035235',
+  'unifunc' => 'content_5babbd8fa637e5_79077969',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'efbd0dec83bed8de228b1cac5a8420e1d59bd620' => 
     array (
       0 => 'C:\\WinNMP\\WWW\\apxat\\public\\staff\\tpls\\articles\\index.tpl',
-      1 => 1536763704,
+      1 => 1537981838,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5b9a92fb4cc799_65035235 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5babbd8fa637e5_79077969 (Smarty_Internal_Template $_smarty_tpl) {
 ?><div class="main">
     <div class="content container">
       <div class="row">
@@ -47,7 +47,7 @@ foreach ($_from as $_smarty_tpl->tpl_vars['article']->value) {
                     <div class="comments"> 0 комментариев </div>
                     <div class="editing col-sm-offset-6"><a href="edit.php?id=<?php echo $_smarty_tpl->tpl_vars['article']->value['id'];?>
 ">Редактировать</a></div>
-                    <div class="visible"> Статья показывается:</div>
+                    <div class="visible"> Статья показывается:<?php if ($_smarty_tpl->tpl_vars['article']->value['visible'] == 1) {?> ДА <?php } else { ?> НЕТ <?php }?></div>
                      </div> <!-- a-footer -->
                
             </div>
