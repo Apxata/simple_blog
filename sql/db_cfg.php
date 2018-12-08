@@ -8,7 +8,7 @@
 define("DB_SERVER", "localhost");
 define("DB_HOST_AND_NAME", "mysql:host=localhost;dbname=blog");
 define("DB_USER", "blouser");
-define("DB_PASS", "\"\WAS%pl4ALu#):");
+define("DB_PASS", "5iVE1IcI5A1u");
 define("DB_NAME", "blog");
 
 ?>
